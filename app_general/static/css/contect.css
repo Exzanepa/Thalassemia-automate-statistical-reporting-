@@ -1,0 +1,10 @@
+body{
+    background-color: inherit;
+}
+.full-width{
+    min-height: 50vh;
+}
+form{
+    background-color: white;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, .2);
+}

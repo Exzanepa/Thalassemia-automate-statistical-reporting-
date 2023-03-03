@@ -1,0 +1,466 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang='en' dir='ltr'>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CURE</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <meta charset="UTF-8">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
+
+
+
+
+
+
+</head>
+
+<body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="https://bulma.io">
+                <img src="https://cdn.shopify.com/s/files/1/0605/9730/5590/files/curelogoblue.png?v=1642362022"
+                    width="56" height="14">
+            </a>
+
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
+                data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="{% url 'base' %}">
+                    Home
+                </a>
+
+                <a class="navbar-item">
+                    Documentation
+                </a>
+
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                        More
+                    </a>
+
+                    <div class="navbar-dropdown">
+                        <a class="navbar-item">
+                            About
+                        </a>
+                        <a class="navbar-item">
+                            Jobs
+                        </a>
+                        <a class="navbar-item">
+                            Contact
+                        </a>
+                        <hr class="navbar-divider">
+                        <a class="navbar-item">
+                            Report an issue
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
+                        {% if user.is_authenticated %}
+                        <a class="button is-light" href="{% url 'logout' %}">
+                            Log out
+                        </a>
+                        {% else %}
+                        <a class="button is-light" href="{% url 'login' %}">
+                            Log in
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+<section class="main-content columns is-fullheight ">
+
+    <aside class="column is-2 is-narrow-mobile is-fullheight section is-hidden-mobile">
+        <p class="menu-label is-hidden-touch">MENU</p>
+        <ul class="menu-list">
+            <li>
+                <a href="{% url 'base' %}" class=" ">
+                    <span class="icon"><i class="fa fa-home"></i></span> Home
+                </a>
+            </li>
+            <li>
+                <a href="#" class="">
+                    <span class="icon "><i class="fa fa-table  "></i></span> Analytics
+                </a>
+
+                <ul>
+                    <li>
+                        <a href="{% url 'upload' %}" class="is-active has-background-primary">
+                            <span class="icon is-small"><i class="fa fa-link"></i></span> CBC
+                        </a>
+                    </li>
+                    <li>
+
+                        <a href="{% url 'uploadimages' %}">
+                            <span class="icon is-small"><i class="fa fa-link"></i></span> Compare
+                        </a>
+                    </li>
+                    
+
+                    <li>
+                        <a href="#">
+                            <span class="icon is-small"><i class="fa fa-link"></i></span> ...
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+            <li>
+                <a href="{% url 'noisemap' %}" class="">
+                    <span class="icon"><i class="fa fa-info"></i></span> Noisemap
+                </a>
+            </li>
+            <li>
+                <a href="#" class="">
+                    <span class="icon"><i class="fa fa-info"></i></span> About
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+
+
+
+
+    <div class="container column is-30 ">
+        <div class="section">
+
+            <div class="card">
+                <div class="card-header">
+                    <p class="card-header-title has-background-primary has-text-primary-light ">cbc</p>
+                </div>
+                
+                <div class="section">
+                    <div class="container">
+                        <div class="columns">
+                            <div class="column">
+                                <h1>CBC </h1>
+                                <br>
+                                <form method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-sm">
+                                                <input type="file" name="myfile">
+                
+                                            </div><br>
+                
+                                            <div class="col-sm">
+                                                <p id="id">id analyze</p>
+                                                <input type="text" name="attributeid" id="attributeid">
+                                            </div>
+                
+                                            <div class="col-sm"><br>
+                                                <button type="submit" class="button is-primary">Upload</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                
+                            </div>
+                
+                        </div>
+                
+                    </div>
+                </div>
+
+
+                <div class="section">
+                    <div class="container">
+                        <div class="columns">
+                            <div class="column">
+                                <div class="results">
+                                    {% block message %}
+                                    {% if messages %}
+                                    <div class="container" style="color: firebrick; margin-top: 10px">
+                                        {% for message in messages %}
+                                        {{ message }}
+                                        {% endfor %}
+                                    </div>
+                                    {% endif %}
+                                    {% endblock %}
+                                    <div class="row container">
+                                        <div class="container" style="width: 70%; height: 50%; ">
+                                            <canvas id="mychart"></canvas>
+                                            <button class="button is-primary" onclick="download()">download</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        
+
+                    </div>
+
+                </div>
+
+
+
+
+                
+
+
+
+
+
+                <script>
+                    var CHART_COLORS = {
+                        red: 'rgb(255, 99, 132)',
+                        orange: 'rgb(255, 159, 64)',
+                        yellow: 'rgb(255, 205, 86)',
+                        green: 'rgb(75, 192, 192)',
+                        blue: 'rgb(54, 162, 235)',
+                        purple: 'rgb(153, 102, 255)',
+                        grey: 'rgb(201, 203, 207)',
+                        white: 'rgb(255,255,255)',
+
+                    };
+                    const plugin = {
+                        id: 'customCanvasBackgroundColor',
+                        beforeDraw: (chart, args, options) => {
+                            const { ctx } = chart;
+                            ctx.save();
+                            ctx.globalCompositeOperation = 'destination-over';
+                            ctx.fillStyle = options.color || '#ffffff';
+                            ctx.fillRect(0, 0, chart.width, chart.height);
+                            ctx.restore();
+                        }
+                    };
+
+
+
+                    new Chart(document.getElementById("mychart"), {
+                        type: 'bar',
+                        plugins: [plugin],
+                        data: {
+                            labels: {{ listkeys| safe }},
+                            
+
+
+                        datasets: [{
+                            label: "thalassemia",
+
+                            fill: false,
+                            backgroundColor: [
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+
+                                //'rgba(255, 205, 86, 0.2)',
+                                //'rgba(75, 192, 192, 0.2)',
+                                //'rgba(54, 162, 235, 0.2)',
+                                //'rgba(153, 102, 255, 0.2)',
+                                //'rgba(201, 203, 207, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                                'rgb(60,82,145)',
+                            
+
+
+                                //'rgb(255, 159, 64)',
+                                //'rgb(255, 205, 86)',
+                                //'rgb(75, 192, 192)',
+                                //'rgb(54, 162, 235)',
+                                //'rgb(153, 102, 255)',
+                                //'rgb(201, 203, 207)'
+                            ],
+
+                            tension: 0.1,
+                            borderWidth: 1,
+
+                            data: {{ listvalues| safe }},
+                   
+                    
+                                }]
+                            },
+                        options: {
+                        title: {
+                            display: true,
+                            text: 'Visualization'
+                        },
+
+                    },
+                        scales:
+                        {
+                            y: {
+                                // the data minimum used for determining the ticks is Math.min(dataMin, suggestedMin)
+                                suggestedMin: 30,
+
+                                // the data maximum used for determining the ticks is Math.max(dataMax, suggestedMax)
+                                suggestedMax: 50,
+
+                            },
+
+
+                            title: {
+                                display: true,
+                                text: 'yaxis title',
+                            },
+
+
+
+                        },
+                        
+                        });
+                        function download() {
+                        const imageLink = document.createElement('a');
+                        const canvas = document.getElementById('mychart');
+                        imageLink.download = 'canvas123.png';
+                        imageLink.href = canvas.toDataURL('image/png', 1);
+                        //document.write('<img src="'+imageLink+'"/>');
+                        //console.log(imageLink.href);
+                        imageLink.click();
+                    }
+
+
+                </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+            <br />
+
+
+
+        </div>
+    </div>
+
+</section>

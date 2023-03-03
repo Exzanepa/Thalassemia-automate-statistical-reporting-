@@ -1,0 +1,45 @@
+{% extends 'templates.html' %}
+{% block content %}
+
+
+
+
+<div class="section">
+    <div class="container">
+        <div class="columns">
+            <div class="column">
+                <h1>CBC </h1>
+                <br>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm">
+                                <input type="file" name="myfile">
+
+                            </div><br>
+
+                            <div class="col-sm">
+                                <p id="id">id analyze</p>
+                                <input type="text" name="attributeid" id="attributeid">
+                            </div>
+
+                            <div class="col-sm"><br>
+                                <button type="submit" class="button is-primary">Upload</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+{% endblock %}

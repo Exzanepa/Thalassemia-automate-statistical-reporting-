@@ -1,0 +1,141 @@
+{% extends 'templates.html'%}
+{%block content%}
+<div class="section">
+    <div class="container">
+        <h3>Noisemap analysis</h3>
+        <br>
+        <br>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="myfile">
+            <button type="submit">Upload File</button>
+
+
+
+
+
+        </form>
+
+        <br>
+        <a href="delete"><button>delete data table</button></a>
+        <a href="{% url 'test' %}"><button>analysis noise_data</button></a>
+
+
+    </div>
+
+</div>
+
+
+<div class="section">
+    <div class="container">
+        <div class="columns">
+            <div class="column is -3">
+
+
+            <!-- kkkkk -->
+
+
+
+
+            </div>
+            <div class="column is-8">
+                <h1>Results</h1>
+                {% if chart%}
+                <img src="data:image/png;base64,{{chart|safe}}">
+                {% endif %}
+
+
+                <a class="button is-light" href="{% url 'noisemap' %}">
+                    back
+                </a>
+
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+
+
+<div class="section">
+    <div class="container">
+        <h3>Noisemap analysis</h3>
+        <br>
+        <br>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="myfile">
+            <button type="submit">Upload File</button>
+
+
+
+
+
+        </form>
+
+        <br>
+        <a href="delete"><button>delete data table</button></a>
+        <a href="{% url 'test' %}"><button>analysis noise_data</button></a>
+
+
+    </div>
+
+</div>
+
+
+<div class="section">
+    <div class="container">
+        <div class="columns">
+            <div class="column is -3">
+                <table is-bordered class="table" border="1" cellpadding="3">
+                    <thead>
+                        <tr class="is-selected">
+                            <th>x</th>
+                            <th>y</th>
+                            <th>z</th>
+
+
+                        </tr>
+                    </thead>
+
+                    {% for instance in data %}
+                    <tr>
+
+                        <td>{{instance.fields.x}}</td>
+                        <td>{{instance.fields.y}}</td>
+                        <td>{{instance.fields.z}}</td>
+
+
+
+                    </tr>
+
+
+                    {% endfor %}
+                    <br>
+
+
+
+                </table>
+
+            </div>
+            <div class="column is-8">
+                <h1>results</h1>
+                {% if chart%}
+                <img src="data:image/png;base64,{{chart|safe}}">
+                {% endif %}
+
+
+                <a class="button is-light" href="{% url 'noisemap' %}">
+                    back
+                </a>
+
+
+            </div>
+
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,52 @@
+pip install --user pipenv
+pip --version
+python -m pip install -U pip
+enviroment >>path>>script,site-packages (recognize)
+pip install pipenv
+
+pipenv install requests (ถ้า error ) >>
+Fix**
+To address this problem you need to simply run the following commands:
+
+First, remove your current version of virtualenv: pip uninstall virtualenv
+
+Then, remove your current version of pipenv: pip uninstall pipenv
+
+When you are asked Proceed (y/n)? just enter y. This will give you a clean slate.
+
+Finally, you can once again install pipenv and its dependencies: pip install pipenv
+
+This will also install the latest version of virtualenv.
+
+pipenv install requests (again)
+pipenv shell
+
+django-admin satrproject project1 .(buildproject)
+python manage.py runserver (runserver) 
+
+
+
+python manage.py startapp app_analysis  (คือการสร้างหน้าเว็บ)
+
+
+
+>>css link html เชื่อมต่อ<<
+1.1สร้างโฟลเดอร์ static ในโฟลเดอร์  app
+1.2เปิดการอ่านค่าไฟล์ static สร้างไฟล์ .css
+1.3 สร้างการเชื่อมต่อระบบ อ่านไฟล์ static
+go to project > settings.py
+add "STATICFILES_DIRS = [
+    BASE_DIR / "static",
+] "
+1.4สร้าง html 
+add "{% load static %}" บนสุดเพื่อให้เกิดการอ่านไฟล์ .css ใน โฟลเดอร์ static 
+
+ไปที่ html ไฟ  ไปบริเวณ head 
+<head>
+    <meta charset="utf8">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">************
+    <link rel="stylesheet" href="{% static 'base.css(ไฟล์css ที่ต้องการอ่านสำคัญ)***' %}">****************
+</head>
+
